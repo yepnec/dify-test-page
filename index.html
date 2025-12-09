@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dify AI助手 - 测试页面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(28, 100, 242, 0.1);
+            padding: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #1C64F2, #6C8EF5);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            color: #1C64F2;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #1C64F2, #6C8EF5);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            flex: 1;
+            min-width: 250px;
+            background: #f8faff;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e1ecff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(28, 100, 242, 0.15);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #1C64F2;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .feature-card p {
+            color: #4a5568;
+            font-size: 1rem;
+        }
+        
+        .steps-section {
+            background: #f8faff;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            border: 1px solid #e1ecff;
+        }
+        
+        .steps-section h2 {
+            color: #1C64F2;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        
+        .steps-list {
+            counter-reset: step-counter;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border-left: 4px solid #1C64F2;
+        }
+        
+        .step-item::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #1C64F2;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(28, 100, 242, 0.3);
+        }
+        
+        .step-icon {
+            margin-right: 20px;
+            color: #1C64F2;
+            font-size: 1.5rem;
+        }
+        
+        .step-content h3 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .step-content p {
+            color: #4a5568;
+        }
+        
+        .status-indicator {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #f8faff 0%, #e9f2ff 100%);
+            border-radius: 15px;
+            margin-top: 40px;
+            border: 2px dashed #c3dafe;
+        }
+        
+        .status-indicator h3 {
+            color: #1C64F2;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .status-text {
+            display: inline-flex;
+            align-items: center;
+            background: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        .status-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #48bb78;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .note {
+            text-align: center;
+            color: #718096;
+            font-size: 0.95rem;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .features {
+                flex-direction: column;
+            }
+            
+            .step-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .step-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .step-item::before {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin: 0 auto 15px;
+            }
+        }
+        
+        /* Dify聊天机器人自定义样式 */
+        #dify-chatbot-bubble-button {
+            background-color: #1C64F2 !important;
+            box-shadow: 0 5px 20px rgba(28, 100, 242, 0.4) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        #dify-chatbot-bubble-button:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 8px 25px rgba(28, 100, 242, 0.6) !important;
+        }
+        
+        #dify-chatbot-bubble-window {
+            width: 24rem !important;
+            height: 40rem !important;
+            border-radius: 15px !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-robot"></i> Dify AI助手测试</h1>
+            <p class="subtitle">欢迎使用Dify聊天机器人测试页面。此页面已集成AI助手功能，随时准备为您提供帮助。</p>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-comment-dots"></i>
+                <h3>智能对话</h3>
+                <p>基于先进AI模型，提供自然流畅的对话体验，支持多种问题类型回答。</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <h3>快速响应</h3>
+                <p>毫秒级响应速度，实时处理您的查询，提供即时准确的回答。</p>
+            </div>
+            
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>安全可靠</h3>
+                <p>企业级安全防护，保障您的对话隐私和数据安全。</p>
+            </div>
+        </div>
+        
+        <div class="steps-section">
+            <h2><i class="fas fa-list-ol"></i> 测试步骤</h2>
+            <div class="steps-list">
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-save"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>保存文件</h3>
+                        <p>将此文件保存为HTML格式（如：dify-test.html）到您的本地设备。</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>打开文件</h3>
+                        <p>双击保存的HTML文件，它将在您的默认浏览器中打开。</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>查找图标</h3>
+                        <p>查看浏览器窗口右下角，寻找蓝色的AI助手聊天图标。</p>
+                    </div>
+                </div>
+                
+                <div class="step-item">
+                    <div class="step-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>开始对话</h3>
+                        <p>点击聊天图标，打开对话窗口，输入问题开始与AI助手交流。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-indicator">
+            <h3><i class="fas fa-plug"></i> 连接状态</h3>
+            <div class="status-text">
+                <span class="status-dot"></span>
+                Dify聊天机器人已就绪
+            </div>
+            <p style="margin-top: 15px; color: #718096;">页面加载完成后，右下角将出现蓝色AI助手图标</p>
+        </div>
+        
+        <p class="note">
+            <i class="fas fa-info-circle"></i> 注：确保您的网络可以访问Dify服务器（172.16.204.124），否则聊天功能将不可用。
+        </p>
+    </div>
+    
+    <!-- Dify聊天机器人代码 -->
+    <script>
+     window.difyChatbotConfig = {
+      token: 'TDd4WxPMdJHuqvbr',
+      baseUrl: 'http://172.16.204.124',
+      // 可选：添加欢迎语
+      welcomeText: '您好！我是Dify AI助手，有什么可以帮您？',
+      // 可选：默认语言
+      language: 'zh-Hans'
+     }
+    </script>
+    <script
+     src="http://172.16.204.124/embed.min.js"
+     id="TDd4WxPMdJHuqvbr"
+     defer>
+    </script>
+    
+    <script>
+        // 页面加载完成后的效果
+        document.addEventListener('DOMContentLoaded', function() {
+            // 为步骤项添加动画延迟
+            const stepItems = document.querySelectorAll('.step-item');
+            stepItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.style.animation = 'fadeInUp 0.5s ease forwards';
+            });
+            
+            // 检查Dify是否加载
+            setTimeout(() => {
+                const statusDot = document.querySelector('.status-dot');
+                const statusText = document.querySelector('.status-text');
+                
+                if (typeof window.difyChatbot !== 'undefined') {
+                    statusDot.style.background = '#48bb78';
+                    statusText.innerHTML = '<span class="status-dot"></span> Dify聊天机器人已连接 ✓';
+                } else {
+                    statusDot.style.background = '#f56565';
+                    statusText.innerHTML = '<span class="status-dot"></span> Dify连接中...';
+                }
+            }, 2000);
+        });
+        
+        // 添加CSS动画
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .step-item {
+                opacity: 0;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
